@@ -25,7 +25,7 @@ namespace WebDAVSharp.Server.Adapters
         {
             if (request == null)
                 throw new ArgumentNullException("request");
-
+            
             _request = request;
         }
 

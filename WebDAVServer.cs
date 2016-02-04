@@ -239,10 +239,31 @@ namespace WebDAVSharp.Server
         private void ProcessRequest(object state)
         {
 
-            IHttpListenerContext context = (IHttpListenerContext)state;
+            
 
+       
+
+
+
+
+            IHttpListenerContext context = (IHttpListenerContext)state;
+            //Per debug
+            Console.WriteLine("Windows {0}", System.Security.Principal.WindowsIdentity.GetCurrent().Name);
+           // Console.WriteLine("Context {0}", context.AdaptedInstance.User.Identity.Name);
             // For authentication
-            Thread.SetData(Thread.GetNamedDataSlot(HttpUser), context.AdaptedInstance.User.Identity);
+
+            if (context.AdaptedInstance.User != null)
+            {
+                Thread.SetData(Thread.GetNamedDataSlot(HttpUser), context.AdaptedInstance.User.Identity);
+            }
+            else
+            {
+                Thread.SetData(Thread.GetNamedDataSlot(HttpUser), null);
+            }
+
+            
+
+            
 
             _log.Info(context.Request.HttpMethod + " " + context.Request.RemoteEndPoint + ": " + context.Request.Url);
             try
